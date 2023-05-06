@@ -1,4 +1,5 @@
-import { AiFillGithub, AiFillLinkedin } from "react-icons/ai";
+import { AiFillGithub } from "react-icons/ai";
+import { FaLinkedinIn } from "react-icons/fa";
 
 import ExternalLink from "../navigation/ExternalLink";
 import PageLink from "../navigation/PageLink";
@@ -6,10 +7,9 @@ import ToggleDarkMode from "../button/ToggleDarkMode";
 
 interface MobileNavProps extends React.ComponentPropsWithoutRef<"div"> {
   isOpen: boolean;
-  close: () => void;
 }
 
-const MobileNav: React.FC<MobileNavProps> = ({ isOpen, close, ...props }) => {
+const MobileNav: React.FC<MobileNavProps> = ({ isOpen, ...props }) => {
   if (!isOpen) return null;
   return (
     <div
@@ -21,7 +21,7 @@ const MobileNav: React.FC<MobileNavProps> = ({ isOpen, close, ...props }) => {
           <AiFillGithub size="1.75rem" />
         </ExternalLink>
         <ExternalLink href="https://www.linkedin.com/in/willjin1796" noStyle>
-          <AiFillLinkedin size="1.75rem" />
+          <FaLinkedinIn size="1.5rem" className="m-[0.25rem]" />
         </ExternalLink>
         <PageLink href="/blog">Blog</PageLink>
         <PageLink href="/project">Projects</PageLink>

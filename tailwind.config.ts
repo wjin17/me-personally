@@ -5,8 +5,8 @@ export default {
   theme: {
     extend: {
       boxShadow: {
-        "brutal-black": "4px 4px black",
-        "brutal-white": "4px 4px white",
+        "brutal-black": "3px 3px black",
+        "brutal-white": "3px 3px white",
       },
     },
   },

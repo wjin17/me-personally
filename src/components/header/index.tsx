@@ -1,7 +1,8 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { AiFillGithub, AiFillLinkedin } from "react-icons/ai";
+import { AiFillGithub } from "react-icons/ai";
+import { FaLinkedinIn } from "react-icons/fa";
 import Hamburger from "hamburger-react";
 
 import ExternalLink from "../navigation/ExternalLink";
@@ -27,7 +28,7 @@ const Header: React.FC<HeaderProps> = ({ ...props }) => {
           <AiFillGithub size="1.75rem" />
         </ExternalLink>
         <ExternalLink href="https://www.linkedin.com/in/willjin1796" noStyle>
-          <AiFillLinkedin size="1.75rem" />
+          <FaLinkedinIn size="1.5rem" className="m-[0.25rem]" />
         </ExternalLink>
         <PageLink href="/blog">Blog</PageLink>
         <PageLink href="/project">Projects</PageLink>

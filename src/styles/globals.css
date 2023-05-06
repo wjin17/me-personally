@@ -5,3 +5,9 @@
 .dark {
   background-color: black;
 }
+
+@layer base {
+  html {
+    scroll-behavior: smooth !important;
+  }
+}
