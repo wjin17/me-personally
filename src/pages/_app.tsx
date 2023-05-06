@@ -16,7 +16,7 @@ type AppPropsWithLayout = AppProps & {
 
 function MeApp({ Component, pageProps }: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? ((page) => page);
-  return getLayout(<Component {...pageProps} />);
+  return <>{getLayout(<Component {...pageProps} />)}</>;
 }
 
-export default api.withTRPC(MeApp as NextPage);
+export default api.withTRPC(MeApp);
