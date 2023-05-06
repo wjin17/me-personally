@@ -5,7 +5,7 @@ type BaseLayoutProps = React.ComponentPropsWithoutRef<"div">;
 
 const BaseLayout: React.FC<BaseLayoutProps> = ({ children, ...props }) => {
   return (
-    <div {...props} className="dark:bg-black">
+    <div {...props} className="mx-auto max-w-7xl dark:bg-black">
       <Head>
         <link
           rel="apple-touch-icon"
