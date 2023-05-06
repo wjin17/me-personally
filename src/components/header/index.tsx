@@ -1,9 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import { AiFillGithub, AiFillLinkedin } from "react-icons/ai";
+import ToggleDarkMode from "../button/ToggleDarkMode";
 
-import ExternalLink from "../navigation/external";
-import PageLink from "../navigation/page";
+import ExternalLink from "../navigation/ExternalLink";
+import PageLink from "../navigation/PageLink";
 
 type HeaderProps = React.ComponentPropsWithoutRef<"div">;
 
@@ -25,6 +26,7 @@ const Header: React.FC<HeaderProps> = ({ ...props }) => {
         </ExternalLink>
         <PageLink href="/blog">Blog</PageLink>
         <PageLink href="/project">Projects</PageLink>
+        <ToggleDarkMode />
       </div>
     </div>
   );
