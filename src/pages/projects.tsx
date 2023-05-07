@@ -3,7 +3,7 @@ import type { ReactElement } from "react";
 import type { NextPageWithLayout } from "./_app";
 import BaseLayout from "~/layouts/base";
 import Heading from "~/components/text/Heading";
-import OpenGraphCard from "~/components/cards/OpenGraphCard";
+import ProjectCard from "~/components/cards/ProjectCard";
 //import { api } from "~/utils/api";
 
 const data = [
@@ -79,12 +79,12 @@ const Projects: NextPageWithLayout = () => {
           Featured projects
         </Heading>
         <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-8">
-          <OpenGraphCard />
-          <OpenGraphCard />
-          <OpenGraphCard />
-          <OpenGraphCard />
-          <OpenGraphCard />
-          <OpenGraphCard />
+          <ProjectCard />
+          <ProjectCard />
+          <ProjectCard />
+          <ProjectCard />
+          <ProjectCard />
+          <ProjectCard />
         </div>
       </section>
     </div>

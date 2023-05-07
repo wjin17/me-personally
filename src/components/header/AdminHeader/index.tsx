@@ -4,9 +4,9 @@ import Link from "next/link";
 import Hamburger from "hamburger-react";
 
 import PageLink from "../../navigation/PageLink";
-import ToggleDarkMode from "../../button/ToggleDarkMode";
+import ToggleDarkMode from "../../buttons/ToggleDarkMode";
 import AdminMobileNav from "./AdminMobileNav";
-import ActionButton from "~/components/button/ActionButton";
+import ActionButton from "~/components/buttons/ActionButton";
 import { signOut } from "next-auth/react";
 // import MobileNav from "./MobileNav";
 

@@ -8,7 +8,7 @@ import type {
 import { getCsrfToken } from "next-auth/react";
 import { useRouter } from "next/router";
 
-import ActionButton from "~/components/button/ActionButton";
+import ActionButton from "~/components/buttons/ActionButton";
 import TextInput from "~/components/input/TextInput.tsx";
 import Heading from "~/components/text/Heading";
 

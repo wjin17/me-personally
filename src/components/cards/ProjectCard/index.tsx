@@ -34,7 +34,7 @@ const data = {
   success: true,
 };
 
-const OpenGraphCard: React.FC = () => {
+const ProjectCard: React.FC = () => {
   return (
     <ExternalLink
       href={data.ogUrl}
@@ -62,4 +62,4 @@ const OpenGraphCard: React.FC = () => {
   );
 };
 
-export default OpenGraphCard;
+export default ProjectCard;

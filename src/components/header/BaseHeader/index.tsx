@@ -7,7 +7,7 @@ import Hamburger from "hamburger-react";
 
 import ExternalLink from "../../navigation/ExternalLink";
 import PageLink from "../../navigation/PageLink";
-import ToggleDarkMode from "../../button/ToggleDarkMode";
+import ToggleDarkMode from "../../buttons/ToggleDarkMode";
 import MobileNav from "./MobileNav";
 
 type HeaderProps = React.ComponentPropsWithoutRef<"div">;
