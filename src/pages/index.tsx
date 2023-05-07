@@ -9,8 +9,8 @@ import PageLink from "~/components/navigation/PageLink";
 
 const Home: NextPageWithLayout = () => {
   return (
-    <div className="">
-      <section className="mx-auto flex h-[calc(100vh-6rem)] max-w-2xl flex-col justify-center px-6">
+    <div>
+      <section className="mx-auto flex min-h-[calc(100vh-6rem)] max-w-2xl flex-col justify-center px-6">
         <div className="flex flex-col-reverse items-center gap-4 sm:flex-row">
           <div className="sm:w-1/2">
             <Heading size="lg" bold>
@@ -37,7 +37,7 @@ const Home: NextPageWithLayout = () => {
       </section>
       <section
         id="about"
-        className="mx-auto flex h-[calc(100vh-6rem)] max-w-2xl flex-col justify-center px-6"
+        className="mx-auto flex min-h-[calc(100vh-6rem)] max-w-2xl flex-col justify-center px-6"
       >
         <div>
           <Heading size="lg" bold>

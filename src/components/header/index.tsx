@@ -17,7 +17,7 @@ const Header: React.FC<HeaderProps> = ({ ...props }) => {
   return (
     <div
       {...props}
-      className="sticky top-0 flex flex-row items-center justify-between bg-white px-8 py-4 dark:bg-black"
+      className="sticky top-0 z-40 flex flex-row items-center justify-between bg-white px-8 py-4 dark:bg-black"
     >
       <Link href="/" className="z-50">
         <Image src="/static/pooio.png" alt="me" width="64" height="64" />
@@ -38,7 +38,7 @@ const Header: React.FC<HeaderProps> = ({ ...props }) => {
       <div className="z-50 sm:hidden">
         <Hamburger direction="right" toggled={isOpen} toggle={setOpen} />
       </div>
-      <MobileNav isOpen={isOpen} close={() => setOpen(false)} />
+      <MobileNav isOpen={isOpen} />
     </div>
   );
 };
