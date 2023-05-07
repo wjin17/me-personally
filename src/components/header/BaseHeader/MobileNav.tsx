@@ -1,9 +1,9 @@
 import { AiFillGithub } from "react-icons/ai";
 import { FaLinkedinIn } from "react-icons/fa";
 
-import ExternalLink from "../navigation/ExternalLink";
-import PageLink from "../navigation/PageLink";
-import ToggleDarkMode from "../button/ToggleDarkMode";
+import ExternalLink from "../../navigation/ExternalLink";
+import PageLink from "../../navigation/PageLink";
+import ToggleDarkMode from "../../button/ToggleDarkMode";
 
 interface MobileNavProps extends React.ComponentPropsWithoutRef<"div"> {
   isOpen: boolean;

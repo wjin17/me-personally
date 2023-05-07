@@ -5,9 +5,9 @@ import { AiFillGithub } from "react-icons/ai";
 import { FaLinkedinIn } from "react-icons/fa";
 import Hamburger from "hamburger-react";
 
-import ExternalLink from "../navigation/ExternalLink";
-import PageLink from "../navigation/PageLink";
-import ToggleDarkMode from "../button/ToggleDarkMode";
+import ExternalLink from "../../navigation/ExternalLink";
+import PageLink from "../../navigation/PageLink";
+import ToggleDarkMode from "../../button/ToggleDarkMode";
 import MobileNav from "./MobileNav";
 
 type HeaderProps = React.ComponentPropsWithoutRef<"div">;
@@ -36,7 +36,12 @@ const Header: React.FC<HeaderProps> = ({ ...props }) => {
       </div>
 
       <div className="z-50 sm:hidden">
-        <Hamburger direction="right" toggled={isOpen} toggle={setOpen} />
+        <Hamburger
+          direction="right"
+          toggled={isOpen}
+          toggle={setOpen}
+          rounded
+        />
       </div>
       <MobileNav isOpen={isOpen} />
     </div>

@@ -1,7 +1,7 @@
 import Head from "next/head";
-import Header from "~/components/header";
+import Header from "~/components/header/BaseHeader";
 
-type BaseLayoutProps = React.ComponentPropsWithoutRef<"div">;
+type BaseLayoutProps = React.ComponentPropsWithoutRef<"header">;
 
 const BaseLayout: React.FC<BaseLayoutProps> = ({ children, ...props }) => {
   return (
