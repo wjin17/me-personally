@@ -1,9 +1,15 @@
 import Head from "next/head";
 import AdminHeader from "~/components/header/AdminHeader";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 
 type AdminLayoutProps = React.ComponentPropsWithoutRef<"header">;
 
 const AdminLayout: React.FC<AdminLayoutProps> = ({ children, ...props }) => {
+  const { data, status } = useSession();
+  const router = useRouter();
+  if (status !== "loading" && !data) void router.push("/admin/signin");
+  if (status === "loading" || !data) return null;
   return (
     <div {...props} className="mx-auto max-w-7xl dark:bg-black">
       <Head>

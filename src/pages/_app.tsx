@@ -1,7 +1,9 @@
 import type { ReactElement, ReactNode } from "react";
 import type { NextPage } from "next";
 import type { AppProps } from "next/app";
+import type { Session } from "next-auth";
 import { ThemeProvider } from "next-themes";
+import { SessionProvider } from "next-auth/react";
 
 import { api } from "~/utils/api";
 
@@ -11,17 +13,22 @@ export type NextPageWithLayout<P = object, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode;
 };
 
-type AppPropsWithLayout = AppProps & {
+type AppPropsWithLayout = AppProps<{ session: Session }> & {
   Component: NextPageWithLayout;
 };
 
-function MeApp({ Component, pageProps }: AppPropsWithLayout) {
+function MeApp({
+  Component,
+  pageProps: { session, ...pageProps },
+}: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? ((page) => page);
   return (
     <div className="transition-colors duration-300">
-      <ThemeProvider attribute="class">
-        {getLayout(<Component {...pageProps} />)}
-      </ThemeProvider>
+      <SessionProvider session={session}>
+        <ThemeProvider attribute="class">
+          {getLayout(<Component {...pageProps} />)}
+        </ThemeProvider>
+      </SessionProvider>
     </div>
   );
 }

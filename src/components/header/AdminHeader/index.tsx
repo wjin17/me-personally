@@ -6,6 +6,8 @@ import Hamburger from "hamburger-react";
 import PageLink from "../../navigation/PageLink";
 import ToggleDarkMode from "../../button/ToggleDarkMode";
 import AdminMobileNav from "./AdminMobileNav";
+import ActionButton from "~/components/button/ActionButton";
+import { signOut } from "next-auth/react";
 // import MobileNav from "./MobileNav";
 
 type AdminHeaderProps = React.ComponentPropsWithoutRef<"div">;
@@ -24,6 +26,12 @@ const AdminHeader: React.FC<AdminHeaderProps> = ({ ...props }) => {
       <div className="hidden flex-row items-center gap-8 sm:flex">
         <PageLink href="/blog">Blog</PageLink>
         <PageLink href="/project">Projects</PageLink>
+        <ActionButton
+          onClick={() => void signOut()}
+          className="text-lg font-bold"
+        >
+          Sign out
+        </ActionButton>
         <ToggleDarkMode />
       </div>
 
