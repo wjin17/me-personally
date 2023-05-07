@@ -17,7 +17,7 @@ const BaseModal: React.FC<BaseModalProps> = ({ onClose, children }) => {
         className="absolute h-full w-full bg-neutral-500 opacity-50"
         onClick={onClose}
       />
-      <div className="absolute h-2/3 w-full max-w-md p-4">{children}</div>
+      <div className="absolute h-4/5 w-full max-w-lg p-4">{children}</div>
     </div>
   );
 };

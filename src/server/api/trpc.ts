@@ -16,10 +16,12 @@
  */
 import { type CreateNextContextOptions } from "@trpc/server/adapters/next";
 import { type Session } from "next-auth";
+import { type NodePgDatabase } from "drizzle-orm/node-postgres";
 
 /** Replace this with an object if you want to pass things to `createContextInner`. */
 type CreateContextOptions = {
   session: Session | null;
+  db: NodePgDatabase;
 };
 
 /**
@@ -33,7 +35,7 @@ type CreateContextOptions = {
  * @see https://create.t3.gg/en/usage/trpc#-serverapitrpcts
  */
 const createInnerTRPCContext = (opts: CreateContextOptions) => {
-  return { session: opts?.session };
+  return { session: opts.session, db: opts.db };
 };
 
 /**
@@ -42,11 +44,15 @@ const createInnerTRPCContext = (opts: CreateContextOptions) => {
  *
  * @see https://trpc.io/docs/context
  */
+import { getServerAuthSession } from "../auth";
+import { db } from "../db";
+
 export const createTRPCContext = async (opts: CreateNextContextOptions) => {
   const { req, res } = opts;
   const session = await getServerAuthSession({ req, res });
   return createInnerTRPCContext({
     session,
+    db,
   });
 };
 
@@ -97,8 +103,6 @@ export const createTRPCRouter = t.router;
  * are logged in.
  */
 export const publicProcedure = t.procedure;
-
-import { getServerAuthSession } from "../auth";
 
 const isAuthed = t.middleware(({ ctx, next }) => {
   if (!ctx.session || !ctx.session.user) {

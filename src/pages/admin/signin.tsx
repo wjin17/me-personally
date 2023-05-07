@@ -40,15 +40,11 @@ const AdminSignin = ({
       <form onSubmit={(e) => void onSubmit(e)} className="flex flex-col">
         <input name="csrfToken" type="hidden" defaultValue={csrfToken} />
         <TextInput
-          {...(register("password"), { required: true })}
           className="mb-8"
           type="password"
           autoComplete="password"
           placeholder="Password"
-          value={getValues("password")}
-          onChange={(e) => {
-            setValue("password", e.target.value);
-          }}
+          {...(register("password"), { required: true })}
         />
         <ActionButton type="submit">Sign in</ActionButton>
       </form>
