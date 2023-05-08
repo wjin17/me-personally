@@ -1,24 +1,28 @@
-import BaseEditor from "../WYSIWYG";
+import BaseEditor from "../TextEditor";
 import {
   BlockDropdown,
   BoldMarkButton,
+  BulletedListButton,
   CenterAlignButton,
   CodeMarkButton,
   ItalicMarkButton,
   JustifyAlignButton,
   LeftAlignButton,
+  NumberedListButton,
   RightAlignButton,
   UnderlineMarkButton,
-} from "../WYSIWYG/Buttons";
+} from "../TextEditor/Buttons";
 
 const ToolBar = () => {
   return (
-    <div className="flex flex-wrap gap-2">
+    <div className="mt-4 flex flex-wrap gap-4">
       <LeftAlignButton />
       <CenterAlignButton />
       <RightAlignButton />
       <JustifyAlignButton />
       <BlockDropdown />
+      <NumberedListButton />
+      <BulletedListButton />
       <div className="flex flex-wrap gap-2">
         <BoldMarkButton />
         <CodeMarkButton />

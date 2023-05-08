@@ -15,13 +15,8 @@ export const Element = ({
   element,
 }: RenderElementProps) => {
   const alignment = (element.align ?? "left") as keyof typeof alignMap;
+  if (element.type === "bulleted-list") console.log("wtf fam");
   switch (element.type) {
-    // case "bulleted-list":
-    //   return (
-    //     <ul style={style} {...attributes}>
-    //       {children}
-    //     </ul>
-    //   );
     case "heading-one":
       return (
         <Heading {...attributes} className={`${alignMap[alignment]}`} size="xl">
@@ -40,18 +35,30 @@ export const Element = ({
           {children}
         </Heading>
       );
-    // case "list-item":
-    //   return (
-    //     <li style={style} {...attributes}>
-    //       {children}
-    //     </li>
-    //   );
-    // case "numbered-list":
-    //   return (
-    //     <ol style={style} {...attributes}>
-    //       {children}
-    //     </ol>
-    //   );
+    case "bulleted-list":
+      return (
+        <ul
+          {...attributes}
+          className={`list-inside list-disc ${alignMap[alignment]}`}
+        >
+          {children}
+        </ul>
+      );
+    case "list-item":
+      return (
+        <li {...attributes} className={`${alignMap[alignment]}`}>
+          {children}
+        </li>
+      );
+    case "numbered-list":
+      return (
+        <ol
+          {...attributes}
+          className={`list-inside list-decimal ${alignMap[alignment]}`}
+        >
+          {children}
+        </ol>
+      );
     default: {
       return (
         <Paragraph {...attributes} className={`${alignMap[alignment]}`}>

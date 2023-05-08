@@ -5,7 +5,7 @@ import {
   Editable,
   withReact,
   type RenderElementProps,
-  RenderLeafProps,
+  type RenderLeafProps,
 } from "slate-react";
 import { Element, Leaf } from "./Elements";
 

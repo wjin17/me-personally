@@ -10,11 +10,12 @@ import {
   FaBold,
   FaCode,
   FaItalic,
+  FaListOl,
+  FaListUl,
   FaUnderline,
 } from "react-icons/fa";
 import ActionButton from "~/components/buttons/ActionButton";
 import { useState } from "react";
-import Paragraph from "~/components/text/Paragraph";
 
 export const TEXT_ALIGN_TYPES = ["left", "center", "right", "justify"];
 
@@ -36,7 +37,7 @@ const BlockIconButton = ({
   );
   return (
     <ActionButton
-      className={active ? "bg-neutral-300" : ""}
+      className={`bg-opacity-70 ${active ? "bg-neutral-500" : ""}`}
       onClick={(e) => {
         e.preventDefault();
         toggleBlock(editor, format);
@@ -69,6 +70,18 @@ export const JustifyAlignButton = () =>
   BlockIconButton({
     format: "justify",
     icon: FaAlignJustify,
+  });
+
+export const NumberedListButton = () =>
+  BlockIconButton({
+    format: "numbered-list",
+    icon: FaListOl,
+  });
+
+export const BulletedListButton = () =>
+  BlockIconButton({
+    format: "bulleted-list",
+    icon: FaListUl,
   });
 
 export const TEXT_SIZE_TYPES = [
@@ -105,8 +118,8 @@ const BlockTextButton = ({
   );
   return (
     <button
-      className={`w-full rounded-lg py-2 hover:bg-neutral-200 ${
-        active ? "bg-neutral-300" : ""
+      className={`w-full rounded-lg bg-opacity-70 py-2 hover:bg-neutral-200 ${
+        active ? "bg-neutral-500" : ""
       }`}
       onClick={(e) => {
         e.preventDefault();
@@ -164,7 +177,7 @@ const MarkButton = ({ format, icon }: MarkButtonProps): JSX.Element => {
   const active = isMarkActive(editor, format);
   return (
     <ActionButton
-      className={active ? "bg-neutral-300" : ""}
+      className={`bg-opacity-70 ${active ? "bg-neutral-500" : ""}`}
       onClick={(e) => {
         e.preventDefault();
         toggleMark(editor, format);
