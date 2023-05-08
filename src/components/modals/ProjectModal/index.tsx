@@ -5,31 +5,50 @@ import BaseModal, { type BaseModalProps } from "../BaseModal";
 import TextInput from "~/components/input/TextInput.tsx";
 import ActionButton from "~/components/buttons/ActionButton";
 import { api } from "~/utils/api";
-import type { insertProjectsSchema } from "~/server/db/schema/projects";
+import type {
+  insertProjectsSchema,
+  UpdateProjectParams,
+} from "~/server/db/schema/projects";
 import type { z } from "zod";
 import ProjectCard from "~/components/cards/ProjectCard";
 
 type ProjectData = z.infer<typeof insertProjectsSchema>;
 
-const ProjectModal: React.FC<BaseModalProps> = ({ onClose }) => {
+interface ProjectModalProps extends BaseModalProps {
+  project?: UpdateProjectParams;
+  refetch?: () => void;
+}
+
+const ProjectModal: React.FC<ProjectModalProps> = ({
+  project,
+  refetch,
+  onClose,
+}) => {
   const { register, handleSubmit, watch } = useForm<ProjectData>({
     defaultValues: {
-      title: "VisuAl",
-      description:
-        "A static website visualizing some data structures and algorithms.",
-      url: "https://github.com/wjin17/VisuAl",
-      image:
-        "https://raw.githubusercontent.com/wjin17/VisuAl/master/img/DijkstraGif.gif",
+      title: project?.title ?? "",
+      description: project?.description ?? "",
+      github: project?.github ?? "",
+      demo: project?.demo,
+      image: project?.image ?? "",
     },
   });
 
-  const { mutate } = api.projects.add.useMutation();
+  const { mutate: addProject } = api.projects.add.useMutation();
+  const { mutate: updateProject } = api.projects.update.useMutation();
 
   const onSubmit = handleSubmit((data, e) => {
     e?.preventDefault();
-    mutate(data);
+    if (project?.id) {
+      updateProject({ ...data, id: project.id, demo: data.demo ?? null });
+    } else {
+      addProject(data);
+    }
+    if (refetch) refetch();
     onClose();
   });
+
+  const fieldValues = watch();
 
   return (
     <BaseModal onClose={onClose}>
@@ -51,12 +70,19 @@ const ProjectModal: React.FC<BaseModalProps> = ({ onClose }) => {
             placeholder="Description"
             {...register("description")}
           />
-          <label htmlFor="url">Url</label>
+          <label htmlFor="url">Github URL</label>
           <TextInput
-            id="url"
+            id="github"
             className="mb-8"
-            placeholder="URL"
-            {...register("url")}
+            placeholder="Github URL"
+            {...register("github")}
+          />
+          <label htmlFor="url">Demo URL</label>
+          <TextInput
+            id="demo"
+            className="mb-8"
+            placeholder="Demo URL"
+            {...register("demo")}
           />
           <label htmlFor="image">Image</label>
           <TextInput
@@ -68,9 +94,13 @@ const ProjectModal: React.FC<BaseModalProps> = ({ onClose }) => {
           <Heading size="lg" bold>
             Preview
           </Heading>
-          <ProjectCard project={watch()} />
+          <ProjectCard
+            project={{ ...fieldValues, demo: fieldValues.demo ?? null }}
+          />
           <div className="mt-8 flex justify-end">
-            <ActionButton type="submit">Submit</ActionButton>
+            <ActionButton type="submit">
+              {project ? "Update" : "Add"}
+            </ActionButton>
           </div>
         </form>
       </div>

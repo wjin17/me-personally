@@ -21,7 +21,7 @@ type SignInData = {
 const AdminSignin = ({
   csrfToken,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-  const { register, handleSubmit, getValues, setValue } = useForm<SignInData>();
+  const { register, handleSubmit } = useForm<SignInData>();
   const router = useRouter();
   const { data, status } = useSession();
 

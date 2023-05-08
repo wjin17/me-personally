@@ -25,7 +25,7 @@ const AdminHeader: React.FC<AdminHeaderProps> = ({ ...props }) => {
 
       <div className="hidden flex-row items-center gap-8 sm:flex">
         <PageLink href="/blog">Blog</PageLink>
-        <PageLink href="/project">Projects</PageLink>
+        <PageLink href="/projects">Projects</PageLink>
         <ActionButton
           onClick={() => void signOut()}
           className="text-lg font-bold"

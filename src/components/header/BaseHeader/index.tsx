@@ -31,7 +31,7 @@ const Header: React.FC<HeaderProps> = ({ ...props }) => {
           <FaLinkedinIn size="1.5rem" className="m-[0.25rem]" />
         </ExternalLink>
         <PageLink href="/blog">Blog</PageLink>
-        <PageLink href="/project">Projects</PageLink>
+        <PageLink href="/projects">Projects</PageLink>
         <ToggleDarkMode />
       </div>
 

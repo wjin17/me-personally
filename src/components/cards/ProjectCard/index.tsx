@@ -2,66 +2,57 @@ import Image from "next/image";
 import ExternalLink from "~/components/navigation/ExternalLink";
 import Heading from "~/components/text/Heading";
 import Paragraph from "~/components/text/Paragraph";
-import type { Project } from "~/server/db/schema/projects";
-
-// const data = {
-//   twitterSite: "@github",
-//   twitterCard: "summary_large_image",
-//   twitterTitle: "GitHub - wjin17/Car-Simulation",
-//   twitterDescription:
-//     "Contribute to wjin17/Car-Simulation development by creating an account on GitHub.",
-//   ogSiteName: "GitHub",
-//   ogType: "object",
-//   ogTitle: "GitHub - wjin17/Car-Simulation",
-//   ogUrl: "https://github.com/wjin17/Car-Simulation",
-//   ogDescription:
-//     "Contribute to wjin17/Car-Simulation development by creating an account on GitHub.",
-//   ogImage: {
-//     height: "600",
-//     type: null,
-//     url: "https://opengraph.githubassets.com/96cb0f74f3a1cfbb9bd0ed8ee084212360b865cab07efb92ecb398ab4623c998/wjin17/Car-Simulation",
-//     width: "1200",
-//   },
-//   twitterImage: {
-//     alt: null,
-//     height: null,
-//     url: "https://opengraph.githubassets.com/96cb0f74f3a1cfbb9bd0ed8ee084212360b865cab07efb92ecb398ab4623c998/wjin17/Car-Simulation",
-//     width: null,
-//   },
-//   ogLocale: "en",
-//   favicon: "https://github.githubassets.com/favicons/favicon.svg",
-//   charset: "utf-8",
-//   requestUrl: "https://github.com/wjin17/Car-Simulation",
-//   success: true,
-// };
+import type { UpdateProjectParams } from "~/server/db/schema/projects";
 
 type ProjectCardProps = {
-  project: Optional<Project, "id">;
+  project: Optional<UpdateProjectParams, "id">;
+  disabled?: boolean;
 };
 
-const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
+const ProjectCard: React.FC<ProjectCardProps> = ({ project, disabled }) => {
   return (
-    <ExternalLink
-      href={project.url}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="block px-6 py-6"
-    >
-      <div className="">
-        <div className="relative mb-4 w-full pt-[52%]">
+    <div className="flex flex-col rounded-lg border-2 border-black bg-white px-6 py-6 shadow-brutal-black dark:border-white dark:bg-black dark:shadow-brutal-white">
+      <div className="relative mb-4 w-full pt-[52%]">
+        {project.image && (
           <Image
             src={project.image}
             alt={project.description}
             fill
             className="left-0 top-0 h-full w-full rounded-lg object-cover"
           />
-        </div>
-        <Heading size="md" bold>
-          {project.title}
-        </Heading>
-        <Paragraph>{project.description}</Paragraph>
+        )}
       </div>
-    </ExternalLink>
+      <div className="flex flex-col justify-between">
+        <div>
+          <Heading size="md" bold>
+            {project.title}
+          </Heading>
+          <Paragraph>{project.description}</Paragraph>
+        </div>
+        {!disabled && (
+          <div className="flex justify-end gap-4">
+            {project.demo && (
+              <ExternalLink
+                href={project.demo}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block"
+              >
+                Demo
+              </ExternalLink>
+            )}
+            <ExternalLink
+              href={project.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block"
+            >
+              Repo
+            </ExternalLink>
+          </div>
+        )}
+      </div>
+    </div>
   );
 };
 
