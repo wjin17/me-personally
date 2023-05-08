@@ -1,5 +1,6 @@
 import type { RenderElementProps, RenderLeafProps } from "slate-react";
 import Heading from "~/components/text/Heading";
+import InlineLink from "~/components/text/InlineLink";
 import Paragraph from "~/components/text/Paragraph";
 
 const alignMap = {
@@ -14,28 +15,33 @@ export const Element = ({
   children,
   element,
 }: RenderElementProps) => {
-  const alignment = (element.align ?? "left") as keyof typeof alignMap;
-  if (element.type === "bulleted-list") console.log("wtf fam");
   switch (element.type) {
-    case "heading-one":
+    case "heading-one": {
+      const alignment = element.align ?? "left";
       return (
         <Heading {...attributes} className={`${alignMap[alignment]}`} size="xl">
           {children}
         </Heading>
       );
-    case "heading-two":
+    }
+    case "heading-two": {
+      const alignment = element.align ?? "left";
       return (
         <Heading {...attributes} className={`${alignMap[alignment]}`} size="lg">
           {children}
         </Heading>
       );
-    case "heading-three":
+    }
+    case "heading-three": {
+      const alignment = element.align ?? "left";
       return (
         <Heading {...attributes} className={`${alignMap[alignment]}`} size="md">
           {children}
         </Heading>
       );
-    case "bulleted-list":
+    }
+    case "bulleted-list": {
+      const alignment = element.align ?? "left";
       return (
         <ul
           {...attributes}
@@ -44,13 +50,17 @@ export const Element = ({
           {children}
         </ul>
       );
-    case "list-item":
+    }
+    case "list-item": {
+      const alignment = element.align ?? "left";
       return (
         <li {...attributes} className={`${alignMap[alignment]}`}>
           {children}
         </li>
       );
-    case "numbered-list":
+    }
+    case "numbered-list": {
+      const alignment = element.align ?? "left";
       return (
         <ol
           {...attributes}
@@ -59,7 +69,17 @@ export const Element = ({
           {children}
         </ol>
       );
+    }
+    case "link": {
+      const url = element.url;
+      return (
+        <InlineLink {...attributes} href={url}>
+          {children}
+        </InlineLink>
+      );
+    }
     default: {
+      const alignment = element.align ?? "left";
       return (
         <Paragraph {...attributes} className={`${alignMap[alignment]}`}>
           {children}

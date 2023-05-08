@@ -1,7 +1,14 @@
-import { useSlate } from "slate-react";
+import { type ReactEditor, useSlate } from "slate-react";
 import type { IconType } from "react-icons";
 
-import { isBlockActive, isMarkActive, toggleBlock, toggleMark } from "./utils";
+import {
+  isBlockActive,
+  isMarkActive,
+  alignmentSet,
+  toggleBlock,
+  toggleMark,
+  type TextAlignment,
+} from "./utils";
 import {
   FaAlignCenter,
   FaAlignJustify,
@@ -15,13 +22,12 @@ import {
   FaUnderline,
 } from "react-icons/fa";
 import ActionButton from "~/components/buttons/ActionButton";
-import { useState } from "react";
-
-export const TEXT_ALIGN_TYPES = ["left", "center", "right", "justify"];
+import { Fragment, useState } from "react";
+import type { BlockElement } from "./slate-types";
 
 interface BlockIconButtonProps
   extends React.ComponentPropsWithoutRef<"button"> {
-  format: string;
+  format: BlockElement["type"] | TextAlignment;
   icon: IconType;
 }
 
@@ -33,7 +39,7 @@ const BlockIconButton = ({
   const active = isBlockActive(
     editor,
     format,
-    TEXT_ALIGN_TYPES.includes(format) ? "align" : "type"
+    alignmentSet.has(format) ? "align" : "type"
   );
   return (
     <ActionButton
@@ -100,7 +106,7 @@ const sizeLabelMap = {
 
 interface BlockTextButtonProps
   extends React.ComponentPropsWithoutRef<"button"> {
-  format: string;
+  format: BlockElement["type"] | TextAlignment;
   title: string;
   closeMenu: () => void;
 }
@@ -114,11 +120,11 @@ const BlockTextButton = ({
   const active = isBlockActive(
     editor,
     format,
-    TEXT_ALIGN_TYPES.includes(format) ? "align" : "type"
+    alignmentSet.has(format) ? "align" : "type"
   );
   return (
     <button
-      className={`w-full rounded-lg bg-opacity-70 py-2 hover:bg-neutral-200 ${
+      className={`w-full rounded-lg bg-opacity-50 py-2 hover:bg-neutral-600 hover:bg-opacity-50 ${
         active ? "bg-neutral-500" : ""
       }`}
       onClick={(e) => {
@@ -139,14 +145,7 @@ export const BlockDropdown = () => {
     isBlockActive(editor, type)
   ) as keyof typeof sizeLabelMap;
 
-  const sizeButtons = Object.entries(sizeLabelMap).map(([key, value]) => {
-    return () =>
-      BlockTextButton({
-        format: key,
-        title: value,
-        closeMenu: () => setOpen(false),
-      });
-  });
+  const sizes = Object.entries(sizeLabelMap);
 
   return (
     <div className="relative w-36">
@@ -154,15 +153,23 @@ export const BlockDropdown = () => {
         onClick={() => setOpen((prev) => !prev)}
         className="w-full font-bold"
       >
-        {sizeLabelMap[currentType ?? "paragraph"]}
+        {sizeLabelMap[currentType] ?? "Paragraph"}
       </ActionButton>
-      {open && (
-        <div className="absolute flex w-full flex-col gap-2 rounded-lg border-2 border-black bg-white px-2 py-4 shadow-brutal-black dark:border-white dark:bg-black dark:shadow-brutal-white">
-          {sizeButtons.map((renderButton) => {
-            return renderButton();
-          })}
-        </div>
-      )}
+      <div
+        className={`absolute flex w-full flex-col gap-2 rounded-lg border-2 border-black bg-white px-2 py-4 shadow-brutal-black dark:border-white dark:bg-black dark:shadow-brutal-white ${
+          open ? "block" : "hidden"
+        }`}
+      >
+        {sizes.map(([key, value]) => (
+          <Fragment key={key}>
+            {BlockTextButton({
+              format: key as keyof typeof sizeLabelMap,
+              title: value,
+              closeMenu: () => setOpen(false),
+            })}
+          </Fragment>
+        ))}
+      </div>
     </div>
   );
 };
@@ -173,7 +180,7 @@ type MarkButtonProps = {
 };
 
 const MarkButton = ({ format, icon }: MarkButtonProps): JSX.Element => {
-  const editor = useSlate();
+  const editor = useSlate() as ReactEditor;
   const active = isMarkActive(editor, format);
   return (
     <ActionButton

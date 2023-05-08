@@ -1,48 +1,35 @@
-import { type ReactNode, useCallback, useState } from "react";
-import { createEditor } from "slate";
+import { type ReactNode, useCallback } from "react";
+import { Range, Transforms } from "slate";
 import {
   Slate,
   Editable,
-  withReact,
   type RenderElementProps,
   type RenderLeafProps,
+  type ReactEditor,
 } from "slate-react";
 import { Element, Leaf } from "./Elements";
 
-type CustomText = {
-  text: string;
-  bold?: boolean;
-  code?: boolean;
-  italic?: boolean;
-  underline?: boolean;
-};
-interface CustomElement {
-  type: string;
-  children: CustomText[];
-  align?: string;
-}
+import type { CustomElement } from "./slate-types";
 
-declare module "slate" {
-  interface CustomTypes {
-    Element: CustomElement;
-    Text: CustomText;
-  }
-}
-
-const initialValue: CustomElement[] = [
+const defaultValue: CustomElement[] = [
   {
     type: "paragraph",
+    align: "left",
     children: [{ text: "" }],
   },
 ];
 
 type BaseEditorProps = {
+  editor: ReactEditor;
   renderToolbar: () => ReactNode;
+  initialValue?: CustomElement[];
 };
 
-const BaseEditor: React.FC<BaseEditorProps> = ({ renderToolbar }) => {
-  const [editor] = useState(() => withReact(createEditor()));
-
+const BaseEditor: React.FC<BaseEditorProps> = ({
+  editor,
+  renderToolbar,
+  initialValue,
+}) => {
   const renderElement = useCallback<(props: RenderElementProps) => JSX.Element>(
     (props) => <Element {...props} />,
     []
@@ -53,10 +40,30 @@ const BaseEditor: React.FC<BaseEditorProps> = ({ renderToolbar }) => {
     []
   );
 
+  const onKeyDown: React.KeyboardEventHandler<HTMLInputElement> = (e) => {
+    const { selection } = editor;
+    if (selection && Range.isCollapsed(selection)) {
+      if (e.key === "ArrowLeft" && !e.shiftKey) {
+        e.preventDefault();
+        Transforms.move(editor, { unit: "offset", reverse: true });
+        return;
+      }
+      if (e.key === "ArrowRight" && !e.shiftKey) {
+        e.preventDefault();
+        Transforms.move(editor, { unit: "offset" });
+        return;
+      }
+    }
+  };
+
   return (
-    <Slate editor={editor} value={initialValue}>
-      <Editable renderElement={renderElement} renderLeaf={renderLeaf} />
+    <Slate editor={editor} value={initialValue ?? defaultValue}>
       {renderToolbar()}
+      <Editable
+        {...{ renderElement, renderLeaf, onKeyDown }}
+        spellCheck
+        //autoFocus
+      />
     </Slate>
   );
 };
