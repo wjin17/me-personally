@@ -5,6 +5,7 @@ import BaseLayout from "~/layouts/base";
 import { api } from "~/utils/api";
 import BlogCard from "~/components/cards/BlogCard";
 import Heading from "~/components/text/Heading";
+import Link from "next/link";
 
 const Blog: NextPageWithLayout = () => {
   const { data } = api.blogPosts.getAll.useQuery();
@@ -15,8 +16,12 @@ const Blog: NextPageWithLayout = () => {
       </Heading>
       <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-8">
         {data &&
-          [...data, ...data].map((post) => (
-            <BlogCard key={post.id} post={post} />
+          data.map((post) => (
+            <BlogCard
+              key={post.id}
+              post={post}
+              href={`/blog/${post.slug ?? ""}`}
+            />
           ))}
       </div>
     </div>

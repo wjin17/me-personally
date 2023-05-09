@@ -12,10 +12,6 @@ import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { type Descendant } from "slate";
 import { z } from "zod";
 
-// const slateSchema: z.ZodSchema<Descendant> = z.record(
-//   z.union([z.string(), z.lazy(() => z.array(slateSchema))])
-// )
-
 export const blogPosts = pgTable("blog_posts", {
   id: serial("id").primaryKey(),
   title: text("title").notNull(),

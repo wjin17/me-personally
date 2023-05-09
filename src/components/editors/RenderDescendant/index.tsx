@@ -1,3 +1,4 @@
+import type { Descendant } from "slate";
 import { Element, Leaf } from "~/components/editors/TextEditor/Elements";
 import type {
   CustomElement,
@@ -41,20 +42,32 @@ export const RenderDescendant: React.FC<DescendantProps> = ({ node }) => {
   }
 };
 
-function findDescription(node: CustomElement | CustomText) {
+function descriptionDFS(node: CustomElement | CustomText) {
   if (!node) return null;
   if (isLeaf(node)) return null;
   if (node.type === "paragraph") return node;
 
   for (const child of node.children) {
-    const foundNode = findDescription(child);
+    const foundNode = descriptionDFS(child);
     if (foundNode) return node;
   }
 }
 
-export const RenderDescription: React.FC<DescendantProps> = ({ node }) => {
-  if (!node) return null;
-  const description = findDescription(node);
+function findDescription(nodes: Descendant[]) {
+  for (const child of nodes) {
+    const foundNode = descriptionDFS(child);
+    if (foundNode && !isLeaf(child)) return child;
+  }
+  return null;
+}
+
+type DescriptionProps = {
+  nodes?: Descendant[];
+};
+
+export const RenderDescription: React.FC<DescriptionProps> = ({ nodes }) => {
+  if (!nodes) return null;
+  const description = findDescription(nodes);
 
   if (!description) return null;
 
