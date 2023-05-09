@@ -1,7 +1,7 @@
 import { TRPCError } from "@trpc/server";
 import { asc, eq, type SQL } from "drizzle-orm";
 import {
-  //adminProcedure,
+  adminProcedure,
   createTRPCRouter,
   publicProcedure,
 } from "~/server/api/trpc";
@@ -33,19 +33,19 @@ export const blogPostsRouter = createTRPCRouter({
         throw err;
       }
     }),
-  //   add: adminProcedure
-  //     .input(insertProjectSchema)
-  //     .mutation(async ({ input, ctx }) => {
-  //       try {
-  //         const newProject = await ctx.db
-  //           .insert(projects)
-  //           .values(input)
-  //           .returning();
-  //         return newProject;
-  //       } catch (err) {
-  //         console.log(err);
-  //       }
-  //     }),
+  add: adminProcedure
+    .input(insertProjectSchema)
+    .mutation(async ({ input, ctx }) => {
+      try {
+        const newProject = await ctx.db
+          .insert(projects)
+          .values(input)
+          .returning();
+        return newProject;
+      } catch (err) {
+        console.log(err);
+      }
+    }),
   //   update: adminProcedure
   //     .input(updateProjectsSchema)
   //     .mutation(async ({ input, ctx }) => {

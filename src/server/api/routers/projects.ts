@@ -46,7 +46,7 @@ export const projectsRouter = createTRPCRouter({
         console.log(err);
       }
     }),
-  remove: adminProcedure
+  delete: adminProcedure
     .input(z.object({ id: z.number() }))
     .mutation(async ({ input, ctx }) => {
       try {
@@ -59,15 +59,4 @@ export const projectsRouter = createTRPCRouter({
         console.log(err);
       }
     }),
-  test: adminProcedure.query(() => {
-    //   const configs = input.links.map((link) => ({ url: link }));
-    //   const openGraphData = [];
-    //   for (const config of configs) {
-    //     const { error, result } = await ogs(config);
-    //     if (error) throw new Error("Could not get Open Graph Result");
-    //     openGraphData.push(result);
-    //   }
-    //   console.log(openGraphData);
-    return "ayo";
-  }),
 });

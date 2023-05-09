@@ -56,7 +56,7 @@ const BlogPostEditor: React.FC<BlogPostEditorProps> = ({
   hidden,
   initialValue,
 }) => {
-  const { register, handleSubmit, watch } = useForm<BlogPostData>({
+  const { register, handleSubmit, watch, setValue } = useForm<BlogPostData>({
     defaultValues: {
       title: title ?? "",
       postedAt: postedAt ?? "",
@@ -100,6 +100,8 @@ const BlogPostEditor: React.FC<BlogPostEditorProps> = ({
     );
   };
 
+  const isHidden = watch("hidden");
+
   return (
     <div className="rounded-lg border-2 border-black p-4 dark:border-white">
       <form onSubmit={(e) => void onSubmit(e)} className="flex flex-col">
@@ -116,14 +118,14 @@ const BlogPostEditor: React.FC<BlogPostEditorProps> = ({
           placeholder="YYYY-MM-DD"
           {...register("postedAt")}
         />
-        <ToggleSwitch />
-        {/* <label htmlFor="url">Hidden</label>
-        <TextInput
+        <label htmlFor="hidden">{isHidden ? "Hidden" : "Public"}</label>
+        <ToggleSwitch
+          type="checkbox"
           id="hidden"
-          className="mb-8 sm:max-w-[50%]"
-          placeholder="Hidden"
           {...register("hidden")}
-        /> */}
+          checked={isHidden}
+          onClick={() => setValue("hidden", !isHidden)}
+        />
       </form>
       <BaseEditor
         editor={editor}

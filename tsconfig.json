@@ -27,8 +27,7 @@
     "**/*.ts",
     "**/*.tsx",
     "**/*.cjs",
-    "**/*.mjs",
-    "src/components/input/TextInput"
+    "**/*.mjs"
   ],
   "exclude": ["node_modules"]
 }

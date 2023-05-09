@@ -1,4 +1,5 @@
 import { forwardRef } from "react";
+import { BsEye, BsEyeSlash } from "react-icons/bs";
 
 type ToggleProps = React.ComponentPropsWithoutRef<"input">;
 
@@ -7,35 +8,23 @@ const ToggleSwitch: React.FC<ToggleProps> = forwardRef<
   ToggleProps
 >(function TextInput(props, ref) {
   return (
-    <label className="flex cursor-pointer select-none items-center">
-      <div className="relative">
-        <input
-          {...props}
-          id={props.name}
-          ref={ref}
-          aria-label={props.name}
-          type="checkbox"
-          className={`sr-only w-full rounded-lg border-2 border-black bg-white px-4 py-2 shadow-brutal-black outline-none dark:border-white dark:bg-black dark:shadow-brutal-white ${
-            props.className ?? ""
-          }`}
-        />
-      </div>
-      <div className="block h-8 w-14 rounded-full bg-[#E5E7EB]"></div>
-      <div className="dot absolute left-1 top-1 h-6 w-6 rounded-full bg-white transition"></div>
+    <label htmlFor={props.name} className="relative h-8 w-14 cursor-pointer">
+      <input
+        {...props}
+        id={props.name}
+        ref={ref}
+        aria-label={props.name}
+        type="checkbox"
+        className={`peer sr-only ${props.checked ? "block" : "hidden"} ${
+          props.className ?? ""
+        }`}
+      />
+      <span className="absolute inset-y-0 start-0 z-10 m-1 inline-flex h-6 w-6 items-center justify-center rounded-full border-2 border-black transition-all peer-checked:start-6 dark:border-white">
+        {props.checked ? <BsEyeSlash size={16} /> : <BsEye size={16} />}
+      </span>
+      <span className="absolute inset-0 rounded-full border-2 border-black transition dark:border-white" />
     </label>
   );
 });
 
 export default ToggleSwitch;
-
-{
-  /* <label for="toggleTwo" class="flex cursor-pointer select-none items-center">
-  <div class="relative">
-    <input type="checkbox" id="toggleTwo" class="sr-only" />
-    <div class="block h-8 w-14 rounded-full bg-[#E5E7EB]"></div>
-    <div
-      class="dot absolute left-1 top-1 h-6 w-6 rounded-full bg-white transition"
-    ></div>
-  </div>
-</label> */
-}
