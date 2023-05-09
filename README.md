@@ -59,7 +59,7 @@ npm start
 
 ### Admin section
 
-The admin section can be accessed through /admin. There you can add, update, and delete projects/blog posts. Sign in with the same password you set with in the environment variables.
+The admin section can be accessed through /admin. There you can add, update, and delete projects/blog posts. Sign in with the same password you set in the environment variables.
 
 ## Customizing
 
