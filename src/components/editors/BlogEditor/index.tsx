@@ -24,7 +24,7 @@ import type { CustomElement } from "../TextEditor/slate-types";
 import { useForm } from "react-hook-form";
 
 import TextInput from "~/components/input/TextInput";
-// import { api } from "~/utils/api";
+import { api } from "~/utils/api";
 // import type {
 //   insertProjectSchema,
 //   UpdateProjectParams,
@@ -43,7 +43,6 @@ type BlogPostEditorProps = {
 };
 
 const blogPostSchema = insertBlogPostSchema.omit({
-  slug: true,
   contents: true,
 });
 
@@ -69,8 +68,16 @@ const BlogPostEditor: React.FC<BlogPostEditorProps> = ({
     []
   );
 
+  const { mutate: addBlogPost } = api.blogPosts.add.useMutation();
+
   const onSubmit = handleSubmit((data, e) => {
     e?.preventDefault();
+    if (id) {
+      console.log("update prev post");
+    } else {
+      //console.log("donut submit");
+      addBlogPost({ ...data, contents: editor.children });
+    }
     console.log(data);
   });
 
@@ -90,10 +97,7 @@ const BlogPostEditor: React.FC<BlogPostEditorProps> = ({
           <ItalicMarkButton />
           <UnderlineMarkButton />
         </div>
-        <ActionButton
-          className="ml-auto"
-          onClick={() => console.log(editor.children)}
-        >
+        <ActionButton className="ml-auto" type="submit">
           Save
         </ActionButton>
       </div>
@@ -126,12 +130,12 @@ const BlogPostEditor: React.FC<BlogPostEditorProps> = ({
           checked={isHidden}
           onClick={() => setValue("hidden", !isHidden)}
         />
+        <BaseEditor
+          editor={editor}
+          renderToolbar={ToolBar}
+          initialValue={initialValue}
+        />
       </form>
-      <BaseEditor
-        editor={editor}
-        renderToolbar={ToolBar}
-        initialValue={initialValue}
-      />
     </div>
   );
 };

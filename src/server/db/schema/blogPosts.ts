@@ -9,15 +9,18 @@ import {
   timestamp,
 } from "drizzle-orm/pg-core";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
+import { type Descendant } from "slate";
 import { z } from "zod";
 
-import type { CustomElement } from "~/components/editors/TextEditor/slate-types";
+// const slateSchema: z.ZodSchema<Descendant> = z.record(
+//   z.union([z.string(), z.lazy(() => z.array(slateSchema))])
+// )
 
 export const blogPosts = pgTable("blog_posts", {
   id: serial("id").primaryKey(),
   title: text("title").notNull(),
-  slug: text("slug").notNull(),
-  contents: jsonb("contents").$type<CustomElement[]>().notNull(),
+  slug: text("slug"),
+  contents: jsonb("contents").$type<Descendant[]>().notNull(),
   hidden: boolean("hidden").notNull(),
   postedAt: date("posted_at").notNull(),
   updated_at: timestamp("updated_at", { withTimezone: true })
@@ -27,10 +30,15 @@ export const blogPosts = pgTable("blog_posts", {
 
 export type BlogPost = InferModel<typeof blogPosts>;
 
-export const insertBlogPostSchema = createInsertSchema(blogPosts).omit({
+export const insertBlogPostSchema = createInsertSchema(blogPosts, {
+  contents: () => z.custom<Descendant[]>(),
+}).omit({
   id: true,
+  slug: true,
   updated_at: true,
+  //  contents: true,
 });
+//.extend({ contents: jsonSchema.array() });
 
 export type InsertBlogPostParams = z.infer<typeof insertBlogPostSchema>;
 

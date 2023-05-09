@@ -1,11 +1,16 @@
 import { TRPCError } from "@trpc/server";
 import { asc, eq, type SQL } from "drizzle-orm";
+import { CustomElement } from "~/components/editors/TextEditor/slate-types";
 import {
   adminProcedure,
   createTRPCRouter,
   publicProcedure,
 } from "~/server/api/trpc";
-import { blogPosts, searchBlogPostsSchema } from "~/server/db/schema/blogPosts";
+import {
+  blogPosts,
+  insertBlogPostSchema,
+  searchBlogPostsSchema,
+} from "~/server/db/schema/blogPosts";
 
 export const blogPostsRouter = createTRPCRouter({
   getAll: publicProcedure.query(async ({ ctx }) => {
@@ -34,16 +39,17 @@ export const blogPostsRouter = createTRPCRouter({
       }
     }),
   add: adminProcedure
-    .input(insertProjectSchema)
+    .input(insertBlogPostSchema)
     .mutation(async ({ input, ctx }) => {
       try {
         const newProject = await ctx.db
-          .insert(projects)
-          .values(input)
+          .insert(blogPosts)
+          .values({ ...input })
           .returning();
         return newProject;
       } catch (err) {
         console.log(err);
+        throw err;
       }
     }),
   //   update: adminProcedure
