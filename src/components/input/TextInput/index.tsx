@@ -12,7 +12,7 @@ const TextInput: React.FC<TextInputProps> = forwardRef<
       id={props.name}
       ref={ref}
       aria-label={props.name}
-      className={`w-full rounded-lg border-2 border-black bg-white px-4 py-2 shadow-brutal-black outline-none dark:border-white dark:bg-black dark:shadow-brutal-white ${
+      className={`rounded-lg border-2 border-black bg-white px-4 py-2 shadow-brutal-black outline-none dark:border-white dark:bg-black dark:shadow-brutal-white ${
         props.className ?? ""
       }`}
     />

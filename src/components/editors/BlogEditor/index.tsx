@@ -18,7 +18,7 @@ import {
   RightAlignButton,
   UnderlineMarkButton,
 } from "../TextEditor/Buttons";
-import { withInlines } from "../TextEditor/utils";
+import { withImages, withInlines } from "../TextEditor/utils";
 
 import { useForm } from "react-hook-form";
 
@@ -61,7 +61,7 @@ const BlogPostEditor: React.FC<BlogPostEditorProps> = ({
   });
 
   const editor = useMemo(
-    () => withInlines(withHistory(withReact(createEditor()))),
+    () => withImages(withInlines(withHistory(withReact(createEditor())))),
     []
   );
 

@@ -26,11 +26,17 @@ export interface LinkElement extends BaseElement {
   url: string;
 }
 
+export interface ImageElement extends BaseElement {
+  type: "image";
+  url: string;
+  align: "left" | "center" | "right";
+}
+
 export type BlockElement = HeadingElement | ParagraphElement | ListElement;
 
 export type InlineElement = LinkElement;
 
-export type CustomElement = BlockElement | InlineElement;
+export type CustomElement = BlockElement | InlineElement | ImageElement;
 
 type CustomText = {
   bold?: boolean;

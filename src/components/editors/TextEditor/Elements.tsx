@@ -1,4 +1,5 @@
 import type { RenderElementProps, RenderLeafProps } from "slate-react";
+import BlogImage from "~/components/text/BlogImage";
 import Heading from "~/components/text/Heading";
 import InlineLink from "~/components/text/InlineLink";
 import Paragraph from "~/components/text/Paragraph";
@@ -71,12 +72,10 @@ export const Element = ({
       );
     }
     case "link": {
-      const url = element.url;
-      return (
-        <InlineLink {...attributes} href={url}>
-          {children}
-        </InlineLink>
-      );
+      return <InlineLink {...{ attributes, element }}>{children}</InlineLink>;
+    }
+    case "image": {
+      return <BlogImage {...{ attributes, element }}>{children}</BlogImage>;
     }
     default: {
       const alignment = element.align ?? "left";
