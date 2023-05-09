@@ -5,6 +5,7 @@ import type {
   CustomText,
 } from "~/components/editors/TextEditor/slate-types";
 import Paragraph from "~/components/text/Paragraph";
+import { findDescription, isLeaf } from "./utils";
 
 const leafAttribute = {
   "data-slate-leaf": true,
@@ -14,10 +15,6 @@ const elementAttribute = {
   "data-slate-node": "element",
   ref: undefined,
 } as const;
-
-function isLeaf(node: CustomElement | CustomText): node is CustomText {
-  return "text" in node;
-}
 
 type DescendantProps = {
   node?: CustomElement | CustomText;
@@ -41,25 +38,6 @@ export const RenderDescendant: React.FC<DescendantProps> = ({ node }) => {
     );
   }
 };
-
-function descriptionDFS(node: CustomElement | CustomText) {
-  if (!node) return null;
-  if (isLeaf(node)) return null;
-  if (node.type === "paragraph") return node;
-
-  for (const child of node.children) {
-    const foundNode = descriptionDFS(child);
-    if (foundNode) return node;
-  }
-}
-
-function findDescription(nodes: Descendant[]) {
-  for (const child of nodes) {
-    const foundNode = descriptionDFS(child);
-    if (foundNode && !isLeaf(child)) return child;
-  }
-  return null;
-}
 
 type DescriptionProps = {
   nodes?: Descendant[];
