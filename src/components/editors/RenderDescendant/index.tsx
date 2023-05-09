@@ -1,5 +1,5 @@
 import type { Descendant } from "slate";
-import { Element, Leaf } from "~/components/editors/TextEditor/Elements";
+import { Leaf, ViewElement } from "~/components/editors/TextEditor/Elements";
 import type {
   CustomElement,
   CustomText,
@@ -33,11 +33,11 @@ export const RenderDescendant: React.FC<DescendantProps> = ({ node }) => {
     );
   } else {
     return (
-      <Element attributes={elementAttribute} element={node}>
+      <ViewElement attributes={elementAttribute} element={node}>
         {node.children.map((child, index) => (
           <RenderDescendant key={index} node={child} />
         ))}
-      </Element>
+      </ViewElement>
     );
   }
 };

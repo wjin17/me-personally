@@ -21,7 +21,7 @@ const alignmentMap = {
   right: "ml-auto",
 };
 
-const BlogImage: React.FC<BlogImageProps> = forwardRef<
+export const BlogImageEditor: React.FC<BlogImageProps> = forwardRef<
   HTMLImageElement,
   BlogImageProps
 >(function InlineLink({ children, element, attributes, ...props }, ref) {
@@ -63,4 +63,28 @@ const BlogImage: React.FC<BlogImageProps> = forwardRef<
   );
 });
 
-export default BlogImage;
+export const BlogImage: React.FC<BlogImageProps> = forwardRef<
+  HTMLImageElement,
+  BlogImageProps
+>(function InlineLink({ children, element, attributes, ...props }, ref) {
+  return (
+    <div {...attributes}>
+      {children}
+      <div
+        contentEditable={false}
+        style={{ userSelect: "none" }}
+        className="relative"
+      >
+        <img
+          ref={ref}
+          src={element.url}
+          className={`block max-h-[20rem] max-w-full ${
+            alignmentMap[element.align]
+          }`}
+          alt=""
+          {...props}
+        />
+      </div>
+    </div>
+  );
+});

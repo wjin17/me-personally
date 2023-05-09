@@ -23,7 +23,7 @@ type InlineLinkProps = React.ComponentPropsWithoutRef<"a"> &
     element: LinkElement;
   };
 
-const InlineLink: React.FC<InlineLinkProps> = forwardRef<
+export const InlineLinkEditor: React.FC<InlineLinkProps> = forwardRef<
   HTMLAnchorElement,
   InlineLinkProps
 >(function InlineLink(
@@ -83,4 +83,25 @@ const InlineLink: React.FC<InlineLinkProps> = forwardRef<
   );
 });
 
-export default InlineLink;
+export const InlineLink: React.FC<InlineLinkProps> = forwardRef<
+  HTMLAnchorElement,
+  InlineLinkProps
+>(function InlineLink(
+  { children, element, attributes, className, ...props },
+  ref
+) {
+  return (
+    <span className="relative inline" {...attributes}>
+      <a
+        {...props}
+        ref={ref}
+        href={element.url}
+        className={`relative underline ${className ?? ""}`}
+      >
+        <InlineChromiumBugfix />
+        {children}
+        <InlineChromiumBugfix />
+      </a>
+    </span>
+  );
+});
