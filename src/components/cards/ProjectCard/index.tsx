@@ -2,10 +2,10 @@ import Image from "next/image";
 import ExternalLink from "~/components/navigation/ExternalLink";
 import Heading from "~/components/text/Heading";
 import Paragraph from "~/components/text/Paragraph";
-import type { UpdateProjectParams } from "~/server/db/schema/projects";
+import type { Project } from "~/server/db/schema/projects";
 
 type ProjectCardProps = {
-  project: Optional<UpdateProjectParams, "id">;
+  project: Optional<Project, "id">;
   disabled?: boolean;
 };
 

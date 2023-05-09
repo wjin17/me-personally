@@ -11,9 +11,7 @@ const Projects: NextPageWithLayout = () => {
   return (
     <div>
       <section className="mx-auto mb-16 min-h-[calc(100vh-6rem)] px-6">
-        <Heading size="lg" bold>
-          Featured projects
-        </Heading>
+        <Heading size="xl">Featured projects</Heading>
         <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-8">
           {data &&
             data.map((project) => (

@@ -6,7 +6,7 @@ import {
   publicProcedure,
 } from "~/server/api/trpc";
 import {
-  insertProjectsSchema,
+  insertProjectSchema,
   projects,
   updateProjectsSchema,
 } from "~/server/db/schema/projects";
@@ -20,7 +20,7 @@ export const projectsRouter = createTRPCRouter({
     return foundProjects;
   }),
   add: adminProcedure
-    .input(insertProjectsSchema)
+    .input(insertProjectSchema)
     .mutation(async ({ input, ctx }) => {
       try {
         const newProject = await ctx.db

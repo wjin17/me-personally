@@ -17,6 +17,7 @@
     "@trpc/next": "^10.18.0",
     "@trpc/react-query": "^10.18.0",
     "@trpc/server": "^10.18.0",
+    "date-fns": "^2.30.0",
     "drizzle-orm": "^0.25.4",
     "drizzle-zod": "^0.4.1",
     "hamburger-react": "^2.5.0",

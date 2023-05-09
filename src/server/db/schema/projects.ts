@@ -1,3 +1,4 @@
+import type { InferModel } from "drizzle-orm";
 import { pgTable, serial, text } from "drizzle-orm/pg-core";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import type { z } from "zod";
@@ -11,15 +12,15 @@ export const projects = pgTable("projects", {
   image: text("image").notNull(),
 });
 
-export const insertProjectsSchema = createInsertSchema(projects).omit({
+export type Project = InferModel<typeof projects>;
+
+export const insertProjectSchema = createInsertSchema(projects).omit({
   id: true,
 });
 
-export type InsertProjectParams = z.infer<typeof insertProjectsSchema>;
+export type InsertProjectParams = z.infer<typeof insertProjectSchema>;
 
 export const selectProjectsSchema = createSelectSchema(projects);
-
-export type Project = z.infer<typeof selectProjectsSchema>;
 
 export const updateProjectsSchema = createSelectSchema(projects);
 

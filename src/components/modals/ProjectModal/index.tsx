@@ -2,17 +2,17 @@ import Heading from "~/components/text/Heading";
 import { useForm } from "react-hook-form";
 
 import BaseModal, { type BaseModalProps } from "../BaseModal";
-import TextInput from "~/components/input/TextInput.tsx";
+import TextInput from "~/components/input/TextInput";
 import ActionButton from "~/components/buttons/ActionButton";
 import { api } from "~/utils/api";
 import type {
-  insertProjectsSchema,
+  insertProjectSchema,
   UpdateProjectParams,
 } from "~/server/db/schema/projects";
 import type { z } from "zod";
 import ProjectCard from "~/components/cards/ProjectCard";
 
-type ProjectData = z.infer<typeof insertProjectsSchema>;
+type ProjectData = z.infer<typeof insertProjectSchema>;
 
 interface ProjectModalProps extends BaseModalProps {
   project?: UpdateProjectParams;

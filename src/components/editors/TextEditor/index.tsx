@@ -62,6 +62,7 @@ const BaseEditor: React.FC<BaseEditorProps> = ({
       <Editable
         {...{ renderElement, renderLeaf, onKeyDown }}
         spellCheck
+        placeholder="Write..."
         //autoFocus
       />
     </Slate>
