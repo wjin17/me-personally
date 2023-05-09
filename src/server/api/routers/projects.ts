@@ -50,11 +50,11 @@ export const projectsRouter = createTRPCRouter({
     .input(z.object({ id: z.number() }))
     .mutation(async ({ input, ctx }) => {
       try {
-        const updatedProject = await ctx.db
+        const deletedProject = await ctx.db
           .delete(projects)
           .where(eq(projects.id, input.id))
           .returning();
-        return updatedProject;
+        return deletedProject;
       } catch (err) {
         console.log(err);
       }

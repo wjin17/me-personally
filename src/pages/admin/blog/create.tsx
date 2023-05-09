@@ -6,7 +6,7 @@ import BlogContentEditor from "~/components/editors/BlogEditor";
 
 import Heading from "~/components/text/Heading";
 
-const AdminBlogEditor: NextPageWithLayout = () => {
+const AdminBlogCreator: NextPageWithLayout = () => {
   return (
     <div className="mx-auto flex min-h-[calc(100vh-6rem)] flex-col overflow-x-clip px-6 pb-64">
       <Heading size="xl">Create blog post</Heading>
@@ -15,8 +15,8 @@ const AdminBlogEditor: NextPageWithLayout = () => {
   );
 };
 
-AdminBlogEditor.getLayout = function getLayout(page: ReactElement) {
+AdminBlogCreator.getLayout = function getLayout(page: ReactElement) {
   return <BaseLayout>{page}</BaseLayout>;
 };
 
-export default AdminBlogEditor;
+export default AdminBlogCreator;

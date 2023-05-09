@@ -56,6 +56,11 @@ export const searchBlogPostsSchema = selectBlogPostsSchema
     )
   );
 
-export const updateBlogPostSchema = createSelectSchema(blogPosts);
+export const updateBlogPostSchema = createSelectSchema(blogPosts, {
+  contents: () => z.custom<Descendant[]>(),
+}).omit({
+  slug: true,
+  updated_at: true,
+});
 
 export type UpdateBlogPostParams = z.infer<typeof updateBlogPostSchema>;

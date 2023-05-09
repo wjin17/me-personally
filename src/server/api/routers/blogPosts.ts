@@ -1,6 +1,6 @@
 import { TRPCError } from "@trpc/server";
-import { asc, eq, type SQL } from "drizzle-orm";
-import { CustomElement } from "~/components/editors/TextEditor/slate-types";
+import { desc, eq, type SQL } from "drizzle-orm";
+import { z } from "zod";
 import {
   adminProcedure,
   createTRPCRouter,
@@ -10,14 +10,18 @@ import {
   blogPosts,
   insertBlogPostSchema,
   searchBlogPostsSchema,
+  updateBlogPostSchema,
 } from "~/server/db/schema/blogPosts";
 
 export const blogPostsRouter = createTRPCRouter({
   getAll: publicProcedure.query(async ({ ctx }) => {
+    let filter: SQL | undefined = eq(blogPosts.hidden, false);
+    if (ctx.session?.user.authed) filter = undefined;
     const foundPosts = await ctx.db
       .select()
       .from(blogPosts)
-      .orderBy(asc(blogPosts.postedAt));
+      .where(filter)
+      .orderBy(desc(blogPosts.postedAt));
     return foundPosts;
   }),
   find: publicProcedure
@@ -50,6 +54,34 @@ export const blogPostsRouter = createTRPCRouter({
       } catch (err) {
         console.log(err);
         throw err;
+      }
+    }),
+  update: adminProcedure
+    .input(updateBlogPostSchema)
+    .mutation(async ({ input, ctx }) => {
+      try {
+        const updatedPost = await ctx.db
+          .update(blogPosts)
+          .set(input)
+          .where(eq(blogPosts.id, input.id))
+          .returning();
+        return updatedPost;
+      } catch (err) {
+        console.log(err);
+        throw err;
+      }
+    }),
+  delete: adminProcedure
+    .input(z.object({ id: z.number() }))
+    .mutation(async ({ input, ctx }) => {
+      try {
+        const deletedPost = await ctx.db
+          .delete(blogPosts)
+          .where(eq(blogPosts.id, input.id))
+          .returning();
+        return deletedPost;
+      } catch (err) {
+        console.log(err);
       }
     }),
   //   update: adminProcedure

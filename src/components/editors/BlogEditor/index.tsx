@@ -19,27 +19,23 @@ import {
   UnderlineMarkButton,
 } from "../TextEditor/Buttons";
 import { withInlines } from "../TextEditor/utils";
-import type { CustomElement } from "../TextEditor/slate-types";
 
 import { useForm } from "react-hook-form";
 
 import TextInput from "~/components/input/TextInput";
 import { api } from "~/utils/api";
-// import type {
-//   insertProjectSchema,
-//   UpdateProjectParams,
-// } from "~/server/db/schema/projects";
 import type { z } from "zod";
 import { insertBlogPostSchema } from "~/server/db/schema/blogPosts";
-import Heading from "~/components/text/Heading";
 import ToggleSwitch from "~/components/input/ToggleSwitch";
+import { type Descendant } from "slate";
+import { useRouter } from "next/router";
 
 type BlogPostEditorProps = {
   id?: number;
   title?: string;
   postedAt?: string;
   hidden: boolean;
-  initialValue?: CustomElement[];
+  initialValue?: Descendant[];
 };
 
 const blogPostSchema = insertBlogPostSchema.omit({
@@ -55,6 +51,7 @@ const BlogPostEditor: React.FC<BlogPostEditorProps> = ({
   hidden,
   initialValue,
 }) => {
+  const router = useRouter();
   const { register, handleSubmit, watch, setValue } = useForm<BlogPostData>({
     defaultValues: {
       title: title ?? "",
@@ -68,16 +65,20 @@ const BlogPostEditor: React.FC<BlogPostEditorProps> = ({
     []
   );
 
-  const { mutate: addBlogPost } = api.blogPosts.add.useMutation();
+  const { mutate: addBlogPost, isLoading: isAdding } =
+    api.blogPosts.add.useMutation();
+  const { mutate: updateBlogPost, isLoading: isUpdating } =
+    api.blogPosts.update.useMutation();
 
-  const onSubmit = handleSubmit((data, e) => {
+  const onSubmit = handleSubmit(async (data, e) => {
     e?.preventDefault();
     if (id) {
-      console.log("update prev post");
+      updateBlogPost({ id, ...data, contents: editor.children });
     } else {
       //console.log("donut submit");
       addBlogPost({ ...data, contents: editor.children });
     }
+    await router.push("/admin/blog");
     console.log(data);
   });
 
@@ -97,8 +98,18 @@ const BlogPostEditor: React.FC<BlogPostEditorProps> = ({
           <ItalicMarkButton />
           <UnderlineMarkButton />
         </div>
-        <ActionButton className="ml-auto" type="submit">
-          Save
+        <ActionButton
+          className="ml-auto"
+          type="submit"
+          disabled={isUpdating || isAdding}
+        >
+          {isUpdating || isAdding
+            ? id
+              ? "Updating"
+              : "Saving"
+            : id
+            ? "Update"
+            : "Save"}
         </ActionButton>
       </div>
     );

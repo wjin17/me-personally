@@ -1,5 +1,5 @@
 import { type ReactNode, useCallback } from "react";
-import { Range, Transforms } from "slate";
+import { type Descendant, Range, Transforms } from "slate";
 import {
   Slate,
   Editable,
@@ -22,7 +22,7 @@ const defaultValue: CustomElement[] = [
 type BaseEditorProps = {
   editor: ReactEditor;
   renderToolbar: () => ReactNode;
-  initialValue?: CustomElement[];
+  initialValue?: Descendant[];
 };
 
 const BaseEditor: React.FC<BaseEditorProps> = ({
