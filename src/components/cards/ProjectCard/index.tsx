@@ -22,7 +22,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, disabled }) => {
           />
         )}
       </div>
-      <div className="flex flex-col justify-between">
+      <div className="flex h-full flex-col justify-between">
         <div>
           <Heading size="md" bold>
             {project.title}
