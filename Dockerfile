@@ -19,6 +19,8 @@ ENV NODE_ENV=production
 RUN addgroup -g 1001 -S nodejs
 RUN adduser -S nextjs -u 1001
 
+RUN chmod -R 777 /usr/src/app/.next/cache
+
 COPY --from=build /usr/src/app/public ./public
 COPY --from=build --chown=nextjs:nodejs /usr/src/app/.next/standalone ./
 COPY --from=build --chown=nextjs:nodejs /usr/src/app/.next/static ./.next/static
