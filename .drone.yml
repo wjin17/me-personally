@@ -11,16 +11,6 @@ steps:
       repo: registry-http.docker/wjin17/me-personally
       insecure: true
 
-  - name: deploy
-    image: danielgormly/drone-plugin-kube:0.0.1
-    settings:
-      template: deployment.yaml
-      server: https://198.23.246.226:6443
-      ca:
-        from_secret: kube_ca
-      token:
-        from_secret: service_account
-
 trigger:
   branch:
     - drone
