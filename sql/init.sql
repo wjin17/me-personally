@@ -15,9 +15,9 @@ INSERT INTO projects(
 VALUES 
   (
     'Sample project', 
-    "Personal website.", 
-    "https://github.com/wjin17/me-personally", 
-    "http://willjin1796.com/"
+    'Personal website.', 
+    'https://github.com/wjin17/me-personally', 
+    'http://willjin1796.com/'
   )
 
 -- BLOG
