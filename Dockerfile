@@ -14,17 +14,20 @@ ENV SKIP_ENV_VALIDATION=true
 RUN npm run build
 
 # 3. Production image, copy all the files and run next
-FROM build AS serve
+FROM base AS serve
 ENV NODE_ENV=production
 
-RUN addgroup -g 1001 -S nodejs
-RUN adduser -S nextjs -u 1001
-
-RUN chmod -R 777 /usr/src/app/.next/cache
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nextjs
 
 COPY --from=build /usr/src/app/public ./public
+
+RUN mkdir .next
+
 COPY --from=build --chown=nextjs:nodejs /usr/src/app/.next/standalone ./
 COPY --from=build --chown=nextjs:nodejs /usr/src/app/.next/static ./.next/static
+
+RUN npm install sharp
 
 USER nextjs
 
