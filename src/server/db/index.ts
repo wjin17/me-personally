@@ -4,7 +4,7 @@ import { env } from "~/env.mjs";
 
 const pool = new Pool({
   connectionString: env.DATABASE_URL,
-  ssl: true,
+  ssl: false,
 });
 
 export const db = drizzle(pool);
