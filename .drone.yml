@@ -13,6 +13,6 @@ steps:
 
 trigger:
   branch:
-    - drone
+    - main
   event:
     - push

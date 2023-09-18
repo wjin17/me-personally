@@ -10,11 +10,16 @@ export const authOptions: NextAuthOptions = {
     CredentialsProvider({
       name: "Credentials",
       credentials: {
+        username: { label: "Username", type: "username" },
         password: { label: "Password", type: "password" },
       },
       authorize(credentials) {
-        if (credentials?.password === adminPassword) {
-          return { id: "", authed: true };
+        console.log("received", credentials);
+        if (
+          credentials?.username === "dobby" &&
+          credentials?.password === adminPassword
+        ) {
+          return { id: "dobby", authed: true };
         }
         return null;
       },
